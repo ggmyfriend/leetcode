@@ -39,7 +39,7 @@ public class ZigZagConversion {
                 buffer[j].append(s.charAt(i));
                 i++;
             }
-            for(int j = 1;j<numRows-1&&i<s.length();j++){
+            for(int j = numRows - 2;j > 0&&i<s.length();j--){
                 buffer[j].append(s.charAt(i));
                 i++;
             }
