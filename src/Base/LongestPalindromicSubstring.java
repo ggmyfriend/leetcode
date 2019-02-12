@@ -20,6 +20,9 @@ package Base;
  */
 public class LongestPalindromicSubstring {
     public static String longestPalindrome(String s) {
+        if(s.length()==0){
+            return "";
+        }
         int [][] matrix = new int[s.length()][s.length()];
         for(int i = 0;i<s.length();i++){
             matrix[i][i] = 1;
