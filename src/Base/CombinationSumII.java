@@ -35,24 +35,52 @@ import java.util.Stack;
  * ]
  */
 public class CombinationSumII {
-    class Solution {
-        List<List<Integer>> lists = new ArrayList<>();
-        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-            Arrays.parallelSort(candidates);
-
-            return lists;
+    public static List<List<Integer>> lists;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        lists = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        Arrays.sort(candidates);
+        recursionSum(candidates,target,list,0,0);
+        return lists;
+    }
+    public void recursionSum(int[] candidates,int target,List<Integer> list,int sum,int index){
+        if(sum == target){
+            List<Integer> list1 = new ArrayList<>(list);
+            lists.add(list1);
         }
-        public void calculateResult(List<Integer> list,int[] candidates,int target,int sum){
-            if(candidates.length == 1){
-                sum = sum + candidates[0];
-                if(sum == target){
-                    list.add(candidates[0]);
-                    lists.add(new ArrayList<>(list));
+        else if(sum > target){
+            return;
+        }
+        else{
+            if(index<candidates.length) {
+                if (index > 0 && candidates[index - 1] == candidates[index]) {
+                    if (!list.contains(candidates[index]))
+                        recursionSum(candidates, target, list, sum, index + 1);
+                    else {
+                        sum = sum + candidates[index];
+                        list.add(candidates[index]);
+                        recursionSum(candidates, target, list, sum, index + 1);
+                        list.remove(list.lastIndexOf(candidates[index]));
+                        sum -= candidates[index];
+                        while (index < candidates.length && candidates[index - 1] == candidates[index]) {
+                            index++;
+                        }
+                        recursionSum(candidates, target, list, sum, index);
+                    }
+                } else {
+                    recursionSum(candidates, target, list, sum, index + 1);
+                    sum = sum + candidates[index];
+                    list.add(candidates[index]);
+                    recursionSum(candidates, target, list, sum, index + 1);
+                    list.remove(list.lastIndexOf(candidates[index]));
                 }
+            }else{
+                return;
             }
         }
     }
-    public static void main(String[] args){
-
+    public static void main(String[] args) {
+        CombinationSumII combinationSum = new CombinationSumII();
+        System.out.println(combinationSum.combinationSum2(new int[]{1,1},2));
     }
 }
