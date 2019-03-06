@@ -26,31 +26,52 @@ Output: -1
  */
 public class SearchInRotateSortedArray {
     public int search(int[] nums, int target) {
-            int i = 0,j=nums.length-1   ;
-            while(i<=j){
-                int mid = (i+j)/2;
-                if(nums[mid]==target)
-                    return mid;
-                if(nums[i]>nums[j]){
-                    if(nums[mid]<nums[j]){
-                        if(target<nums[j])
-                            i = mid;
-                        else
-                            j = mid;
+        int pre = 0,las=nums.length-1;
+        int index = -1;
+        while (pre<=las){
+            int middle = (pre + las)/2;
+            if(nums[middle] == target){
+                index = middle;
+                break;
+            }
+            if(target == nums[pre]){
+                index = pre;
+                break;
+            }
+            if(target == nums[las]){
+                index = las;
+                break;
+            }
+            if(nums[pre]<nums[las]){
+                if(target<nums[middle]){
+                    las = middle - 1;
+                }else{
+                    pre = middle + 1;
+                }
+            }else{
+                if(target<nums[middle]) {
+                    if(nums[pre]<target){
+                        las = middle - 1;
+                    }else if(nums[middle]<nums[las]){
+                        las = middle - 1;
+                    }else if(target<nums[las]&&nums[pre]<nums[middle]){
+                        pre = middle + 1;
                     }else{
-                        if(target>nums[i])
-                            j = mid;
-                        else
-                            i = mid;
+                        break;
+                    }
+                }else{
+                    if(nums[pre]<nums[middle]){
+                        pre = middle + 1;
+                    }else if(nums[middle]<nums[las]&&nums[pre]<target){
+                        las = middle - 1;
+                    }else if(nums[las]>target){
+                        pre = middle + 1;
+                    }else{
+                        break;
                     }
                 }
-                if(nums[i]<nums[j]){
-                    if(target>nums[mid])
-                        i = mid;
-                    else
-                        j = mid;
-                }
             }
-            return -1;
+        }
+        return index;
     }
 }
