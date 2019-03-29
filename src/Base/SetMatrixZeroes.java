@@ -58,6 +58,5 @@ public class SetMatrixZeroes {
         };
         SetMatrixZeroes setMatrixZeroes = new SetMatrixZeroes();
         setMatrixZeroes.setZeroesLessSpace(matrix);
-        CommonUtils.printMatrix(matrix);
     }
 }
